@@ -1,0 +1,24 @@
+{
+    "exercises": {
+        "compoundScale": {
+            "name": "Compound Scale",
+            "description": "Play scale in a bla bla bla"
+        },
+        "251chordTone": {
+            "name": "II-V-I chord tones improvisation",
+            "description": "Play chord tones of each chord in specified rhythm pattern"
+        }
+    },
+    "plans": {
+        "temp": [
+            {
+                "name": "compoundScale",
+                "duration": 120
+            },
+            {
+                "name": "251chordTone",
+                "duration": 90
+            }
+        ]
+    }
+}
