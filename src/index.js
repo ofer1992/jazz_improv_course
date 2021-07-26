@@ -3,6 +3,40 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import data from './data.json'
 
+const ProgressBar = (props) => {
+  const { bgcolor, completed } = props;
+
+  const containerStyles = {
+    height: 20,
+    width: '90%',
+    backgroundColor: "#e0e0de",
+    borderRadius: 50,
+    margin: "auto"
+  }
+
+  const fillerStyles = {
+    height: '100%',
+    width: `${completed}%`,
+    backgroundColor: bgcolor,
+    borderRadius: 'inherit',
+    textAlign: 'right'
+  }
+
+  const labelStyles = {
+    padding: 5,
+    color: 'white',
+    fontWeight: 'bold'
+  }
+
+  return (
+    <div style={containerStyles}>
+      <div style={fillerStyles}>
+        <span style={labelStyles}>{`${Math.round(completed)}%`}</span>
+      </div>
+    </div>
+  );
+};
+
 class Timer extends React.Component {
   constructor(props) {
     super(props);
@@ -77,37 +111,135 @@ class Exercise extends React.Component {
   render() {
     return (
       <div>
-        <h1> {this.props.name} </h1>
-        <h2> {this.props.description} </h2>
+        <h3> {this.props.name} </h3>
+        <h4> {this.props.description} </h4>
+        <span> {JSON.stringify(this.props.params)} </span>
         <Timer duration={this.props.duration} />
       </div>
     )
   }
 
 }
-class HelloMessage extends React.Component {
+
+class ExSequence extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cur: 0,
+    }
+    this.next = this.next.bind(this);
+  }
+
+  next() {
+    this.setState((state, props) => ({ cur: state.cur + 1 }));
+    if (this.state.cur === this.props.exercises.length ) { //hack, value is updated async
+      this.props.next();
+    }
+  }
+
+
+  render() {
+    let cur = this.state.cur % this.props.exercises.length;
+    let displayed = <h2>Finished section!</h2>;
+    if (this.state.cur < this.props.exercises.length) {
+      const ex = this.props.exercises[cur];
+      const _ex = data.exercises[ex.name];
+      displayed = 
+        <div>
+          <ProgressBar bgcolor="black" completed={(this.state.cur / this.props.exercises.length) * 100} />
+          <Exercise key={_ex.name}
+            name={_ex.name}
+            duration={ex.duration}
+            description={_ex.description}
+            params={ex}
+            next={() => this.next()} />
+        </div>
+    }
+    return (
+      <div>
+        {displayed}
+        <button onClick={this.next}>Next</button>
+      </div>
+    )
+  }
+}
+
+class SessionStart extends React.Component {
+
+
   render() {
     return (
       <div>
-        Hello {this.props.name}
+        <h2>Time: {this.props.time} minutes </h2>
+        <br />
+        <button onClick={this.props.start}>Start</button>
       </div>
-    );
+    )
+  }
+}
+
+class Session extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      started: false,
+      cur: 0,
+    }
+    this.start = this.start.bind(this);
+    this.next = this.next.bind(this);
+    this.sessionLength = this.sessionLength.bind(this);
+    this.curSection = this.curSection.bind(this);
+  }
+
+  sessionLength() {
+    let time = 0;
+    for (const sec of data.plans[this.props.name].sections) {
+      time += data.plans[this.props.name][sec].reduce((acc, val) => acc + val.duration, 0);
+    }
+    return time / 60;
+  }
+
+  start() {
+    this.setState({ started: true });
+  }
+
+  next() {
+    this.setState((state, props) => ({
+      cur: state.cur + 1
+    }));
+  }
+
+  curSection() {
+    return data.plans[this.props.name]["sections"][this.state.cur];
+  }
+
+  render() {
+    const finished = this.state.cur >= data.plans[this.props.name].sections.length;
+    console.log(finished);
+    let displayed;
+    if (!this.state.started) {
+      displayed = <SessionStart time={this.sessionLength()} start={() => this.start()} />;
+    }
+    else if (!finished) {
+      displayed = <ExSequence key={this.curSection()} exercises={data.plans[this.props.name][this.curSection()]} next={() => this.next()} />;
+    }
+    else {
+      displayed = <h2>Finished!</h2>;
+    }
+    return (
+      <div>
+        <h1>{this.props.name}</h1>
+        {this.state.started && !finished && <h2>{this.curSection()}</h2>}
+        {displayed}
+      </div>
+    )
   }
 }
 
 function App() {
-  const exercises = data.plans.temp.map((ex) => 
-    {const _ex = data.exercises[ex.name];
-    return <Exercise key={_ex.name}
-      name={_ex.name}
-      duration={ex.duration}
-      description={_ex.description} />
-    }
-  );
   return (
     <div>
-      <HelloMessage name="Ofer" />
-      {exercises}
+      <Session name="autumn_leaves" />
     </div>
   );
 }

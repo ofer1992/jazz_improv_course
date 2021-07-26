@@ -16,9 +16,24 @@
                 "pattern": [1,2,3,4]
             }
         },
+        "leftHandRhythms": {
+            "name": "Left Hand Rhythms",
+            "description": "Play and/or sing the melody, use the left hand to tap, play the bass, or play shell voicings on 1. specific place in each bar or 2. improvised places, complementing the melody.",
+            "parameters": {
+                "songName": []
+            }
+        },
         "251BasicImprov": {
             "name": "II-V-I improvisation exercise",
             "description": "Improvise on a 2-5-1 progression from a limited set of notes, with the relevant pattern",
+            "parameters": {
+                "key": [], 
+                "sets": ["chord tones", "lower neighbour", "upper neighbour"]
+            }
+        },
+        "descending5thsBasicImprov": {
+            "name": "Descending 5ths improvisation exercise",
+            "description": "Improvise on a descending fifths progression from a limited set of notes, with the relevant pattern",
             "parameters": {
                 "key": [], 
                 "sets": ["chord tones", "lower neighbour", "upper neighbour"]
@@ -50,18 +65,116 @@
                 "barLength": [2, 4],
                 "pattern": ["on down beats", "comping patterns"]
             }
+        },
+        "songBasicImprov": {
+            "name": "Improvisation exercise on song",
+            "description": "Improvise on a song from a limited set of notes, with the relevant pattern",
+            "parameters": {
+                "songName": [],
+                "sets": ["chord tones", "lower neighbour", "upper neighbour"]
+            }
         }
     },
     "plans": {
-        "temp": [
-            {
-                "name": "compoundScale",
-                "duration": 120
-            },
-            {
-                "name": "251Voicings",
-                "duration": 90
-            }
-        ]
+        "temp": {
+            "sections": [
+                "test"
+            ],
+            "test": [
+                {
+                    "name": "compoundScale",
+                    "duration": 120
+                },
+                {
+                    "name": "251Voicings",
+                    "duration": 90
+                }
+            ]
+        },
+        "autumn_leaves": {
+            "sections": [
+                "warm-up",
+                "practice",
+                "improvise"
+            ],
+            "warm-up": [
+                {
+                    "name": "251BasicImprov",
+                    "duration": 60,
+                    "sets": "chord tones",
+                    "key": "Gm"
+                },
+                {
+                    "name": "251BasicImprov",
+                    "duration": 60,
+                    "sets": "lower neighbour",
+                    "key": "Gm",
+                    "comment": "partial"
+                },
+                {
+                    "name": "251BasicImprov",
+                    "duration": 60,
+                    "sets": "upper neighbour",
+                    "key": "Gm"
+                },
+                {
+                    "name": "251BasicImprov",
+                    "duration": 60,
+                    "sets": "chord tones",
+                    "key": "Bb"
+                },
+                {
+                    "name": "251BasicImprov",
+                    "duration": 60,
+                    "sets": "lower neighbour",
+                    "key": "Bb",
+                    "comment": "partial"
+                },
+                {
+                    "name": "251BasicImprov",
+                    "duration": 60,
+                    "sets": "upper neighbour",
+                    "key": "Bb"
+                }
+            ],
+            "practice": [
+                {
+                    "name": "251Singing",
+                    "duration": 120,
+                    "sets": "chord tones",
+                    "key": "Gm"
+                },
+                {
+                    "name": "251BasicImprov",
+                    "duration": 90,
+                    "sets": "passing tones",
+                    "key": "Gm"
+                },
+                {
+                    "name": "251BasicImprov",
+                    "duration": 90,
+                    "sets": "passing tones",
+                    "key": "Bb"
+                },
+                {
+                    "name": "descending5thsBasicImprov",
+                    "duration": 180,
+                    "sets": "by choice",
+                    "key": "Gm"
+                },
+                {
+                    "name": "leftHandRhythms",
+                    "duration": 180,
+                    "songName": "Autumn Leaves"
+                }
+            ],
+            "improvise": [
+                {
+                    "name": "songBasicImprov",
+                    "duration": 300,
+                    "songName": "Autumn Leaves"
+                }
+            ]
+        }
     }
 }
