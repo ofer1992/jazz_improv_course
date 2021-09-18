@@ -37,6 +37,29 @@ const ProgressBar = (props) => {
   );
 };
 
+class TimerControl extends React.Component {
+  render() {
+    if (this.props.status) {
+      return (
+        <div>
+          <button class="unstyled-button"><img src="/play_icon.svg" alt="play" height="80" onClick={this.props.play}></img></button>
+          <br></br>
+          <button class="unstyled-button"><img src="/reset_icon.svg" alt="reset" height="20" onClick={this.props.reset}></img></button>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div>
+          <button class="unstyled-button"><img src="/pause_icon.svg" alt="pause" height="80" onClick={this.props.pause}></img></button>
+          <br></br>
+          <button class="unstyled-button"><img src="/reset_icon.svg" alt="reset" height="20" onClick={this.props.reset}></img></button>
+        </div>
+      )
+    }
+
+  }
+}
 class Timer extends React.Component {
   constructor(props) {
     super(props);
@@ -71,33 +94,32 @@ class Timer extends React.Component {
   }
 
   pause() {
-    this.setState({active: false});
+    this.setState({ active: false });
   }
 
   start() {
-    this.setState({active: true});
+    this.setState({ active: true });
   }
 
   tick() {
     if (this.state.active) {
       if (this.state.remaining <= 0) {
-        this.setState({active: false});
+        this.setState({ active: false });
       }
       else {
         this.setState((state, props) => ({
           remaining: state.remaining - 1
         }));
-    }
+      }
     }
   }
+
 
   render() {
     return (
       <div>
         <h2> Time:{this.state.remaining} </h2>
-        <button onClick={this.start}>Start</button>
-        <button onClick={this.pause}>Pause</button>
-        <button onClick={this.reset}>Reset</button>
+        <TimerControl status={!this.state.active} play={() => this.start()} pause={() => this.pause()} reset={() => this.reset()}> </TimerControl>
       </div>
     );
   }
@@ -128,12 +150,21 @@ class ExSequence extends React.Component {
       cur: 0,
     }
     this.next = this.next.bind(this);
+    this.previous = this.previous.bind(this);
   }
 
   next() {
     this.setState((state, props) => ({ cur: state.cur + 1 }));
-    if (this.state.cur === this.props.exercises.length ) { //hack, value is updated async
+    if (this.state.cur === this.props.exercises.length) { //hack, value is updated async
       this.props.next();
+    }
+  }
+  previous() {
+    if (this.state.cur > 0) {
+      this.setState((state, props) => ({ cur: state.cur - 1 }));
+    }
+    if (this.state.cur === 0) { //hack, value is updated async
+      this.props.previous();
     }
   }
 
@@ -144,8 +175,8 @@ class ExSequence extends React.Component {
     if (this.state.cur < this.props.exercises.length) {
       const ex = this.props.exercises[cur];
       const _ex = data.exercises[ex.name];
-      displayed = 
-        <div>
+      displayed =
+        <div class="inline-block-child">
           <ProgressBar bgcolor="black" completed={(this.state.cur / this.props.exercises.length) * 100} />
           <Exercise key={_ex.name}
             name={_ex.name}
@@ -156,9 +187,10 @@ class ExSequence extends React.Component {
         </div>
     }
     return (
-      <div>
+      <div id="ExSequence">
+        <button class="inline-block-child, side-button" onClick={this.previous}>Previous</button>
         {displayed}
-        <button onClick={this.next}>Next</button>
+        <button class="inline-block-child, side-button" onClick={this.next}>Next</button>
       </div>
     )
   }
@@ -187,6 +219,7 @@ class Session extends React.Component {
     }
     this.start = this.start.bind(this);
     this.next = this.next.bind(this);
+    this.previous = this.previous.bind(this);
     this.sessionLength = this.sessionLength.bind(this);
     this.curSection = this.curSection.bind(this);
   }
@@ -208,6 +241,11 @@ class Session extends React.Component {
       cur: state.cur + 1
     }));
   }
+  previous() {
+    if (this.state.cur > 0) {
+      this.setState((state, props) => ({ cur: state.cur - 1 }));
+    }
+  }
 
   curSection() {
     return data.plans[this.props.name]["sections"][this.state.cur];
@@ -221,7 +259,7 @@ class Session extends React.Component {
       displayed = <SessionStart time={this.sessionLength()} start={() => this.start()} />;
     }
     else if (!finished) {
-      displayed = <ExSequence key={this.curSection()} exercises={data.plans[this.props.name][this.curSection()]} next={() => this.next()} />;
+      displayed = <ExSequence key={this.curSection()} exercises={data.plans[this.props.name][this.curSection()]} next={() => this.next()} previous={() => this.previous()} />;
     }
     else {
       displayed = <h2>Finished!</h2>;

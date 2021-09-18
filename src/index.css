@@ -3,3 +3,17 @@ body {
   margin: 20px;
   text-align: center;
 }
+
+.inline-block-child {
+  display: inline-block
+}
+
+.side-button {
+  vertical-align: middle;
+}
+
+.unstyled-button {
+  border: none;
+  padding: 0;
+  background: none;
+}
