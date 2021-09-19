@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import data from './data.json'
+import courses from './courses/courses.json'
 
 const ProgressBar = (props) => {
   const { bgcolor, completed } = props;
@@ -274,10 +275,62 @@ class Session extends React.Component {
   }
 }
 
+function CourseItem(props) {
+  let pic = props.course['pic']
+  let name = props.course['name']
+  return (
+    <div className="course-item" onClick={() => {props.setCourse(props.course)}}>
+      <img src={process.env.PUBLIC_URL+pic} alt={name} height="160"></img>
+      <span className="centered">{name}</span>
+    </div>
+  )
+}
+
+class SessionSelection extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      session : null
+    }
+    this.setSession = this.setSession.bind(this);
+  }
+
+  setSession(session) {
+    this.setState({ session : session});
+  }
+}
+class CoursesSelection extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      course : null
+    }
+    this.setCourse = this.setCourse.bind(this);
+  }
+
+  setCourse(course) {
+    this.setState({ course : course});
+  }
+
+  render() {
+    if (this.state.course == null) { //TODO == is bad?
+      return (
+        <div id="course_selection">
+          <h1>Select Course:</h1>
+          {courses.map((course) =>  <CourseItem course={course} setCourse={this.setCourse} />)}
+        </div>
+      )
+    }
+    return (<span>{this.state.course.name}</span>)
+  }
+}
+
+
 function App() {
   return (
     <div>
-      <Session name="autumn_leaves" />
+      <CoursesSelection/>
+      {/* <Session name="autumn_leaves" /> */}
     </div>
   );
 }
