@@ -1,0 +1,5 @@
+{
+    "name": "Jazz Improvisation Course I",
+    "exercise_list": "exercises.json",
+    "weeks": ["week1.json"]
+}

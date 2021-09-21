@@ -4,6 +4,32 @@ import './index.css';
 import data from './data.json'
 import courses from './courses/courses.json'
 
+let courses_json = {};
+async function loadCourses() {
+  courses.forEach((c) => {
+    let course_path = './courses/'+c.path;
+    let name = c.name;
+    import(course_path+'course.json'
+    ).then( module => module.default
+    ).then(module => {
+      courses_json[name] = {"json": module}
+      // console.log(course_path+module.exercise_list)
+      // console.log(course_path+'exercises.json')
+      import(course_path+module.exercise_list+'').then( module => module.default).then(module => courses_json[name]['exercises'] = module)
+      // import(course_path+'exercises.json').then( module => module.default).then(module => courses_json[name]['exercises'] = module)
+      courses_json[name]['weeks'] = {};
+      // for (const week in module.weeks) {
+        // courses_json[name]['weeks'].push(await );
+      // }
+      // courses_json[name]['weeks'] =  module.weeks.map((week) => import(course_path+week+'').then( module => module.default));
+      module.weeks.forEach(week => {
+        import(course_path+week+'').then( module => module.default).then(module => courses_json[name]['weeks'][week] = module);
+      });
+    });
+    // console.log(courses_json[name]);
+  });
+}
+
 const ProgressBar = (props) => {
   const { bgcolor, completed } = props;
 
@@ -298,6 +324,18 @@ class SessionSelection extends React.Component {
   setSession(session) {
     this.setState({ session : session});
   }
+
+  render() {
+    console.log(this.props.course);
+    console.log(courses_json[this.props.course])
+    console.log(courses_json[this.props.course]['weeks'])
+    return(
+      <div>
+        {}
+        {courses_json[this.props.course].toString()}
+      </div>
+    )
+  }
 }
 class CoursesSelection extends React.Component {
   constructor(props) {
@@ -317,16 +355,18 @@ class CoursesSelection extends React.Component {
       return (
         <div id="course_selection">
           <h1>Select Course:</h1>
-          {courses.map((course) =>  <CourseItem course={course} setCourse={this.setCourse} />)}
+          {courses.map((course) =>  <CourseItem key={course} course={course} setCourse={this.setCourse} />)}
         </div>
       )
     }
-    return (<span>{this.state.course.name}</span>)
+    // return (<span>{this.state.course.name}</span>)
+    return (<SessionSelection course = {this.state.course.name}></SessionSelection>)
   }
 }
 
 
 function App() {
+  loadCourses();
   return (
     <div>
       <CoursesSelection/>
@@ -339,4 +379,4 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
-console.log(data);
+// console.log(data);

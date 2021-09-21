@@ -1,0 +1,173 @@
+[{  
+    "name": "day 1",
+    "sections": [
+        "warm-up",
+        "practice",
+        "improvise"
+    ],
+    "warm-up": [
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "chord tones",
+            "key": "Gm"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "lower neighbour",
+            "key": "Gm",
+            "comment": "partial"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "upper neighbour",
+            "key": "Gm"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "chord tones",
+            "key": "Bb"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "lower neighbour",
+            "key": "Bb",
+            "comment": "partial"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "upper neighbour",
+            "key": "Bb"
+        }
+    ],
+    "practice": [
+        {
+            "name": "251Singing",
+            "duration": 120,
+            "sets": "chord tones",
+            "key": "Gm"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 90,
+            "sets": "passing tones",
+            "key": "Gm"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 90,
+            "sets": "passing tones",
+            "key": "Bb"
+        },
+        {
+            "name": "descending5thsBasicImprov",
+            "duration": 180,
+            "sets": "by choice",
+            "key": "Gm"
+        },
+        {
+            "name": "leftHandRhythms",
+            "duration": 180,
+            "songName": "Autumn Leaves"
+        }
+    ],
+    "improvise": [
+        {
+            "name": "songBasicImprov",
+            "duration": 300,
+            "songName": "Autumn Leaves"
+        }
+    ]
+},
+{  
+    "name": "day 2",
+    "sections": [
+        "warm-up",
+        "practice",
+        "improvise"
+    ],
+    "warm-up": [
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "chord tones",
+            "key": "Gm"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "lower neighbour",
+            "key": "Gm",
+            "comment": "partial"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "upper neighbour",
+            "key": "Gm"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "chord tones",
+            "key": "Bb"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "lower neighbour",
+            "key": "Bb",
+            "comment": "partial"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 60,
+            "sets": "upper neighbour",
+            "key": "Bb"
+        }
+    ],
+    "practice": [
+        {
+            "name": "251Singing",
+            "duration": 120,
+            "sets": "chord tones",
+            "key": "Gm"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 90,
+            "sets": "passing tones",
+            "key": "Gm"
+        },
+        {
+            "name": "251BasicImprov",
+            "duration": 90,
+            "sets": "passing tones",
+            "key": "Bb"
+        },
+        {
+            "name": "descending5thsBasicImprov",
+            "duration": 180,
+            "sets": "by choice",
+            "key": "Gm"
+        },
+        {
+            "name": "leftHandRhythms",
+            "duration": 180,
+            "songName": "Autumn Leaves"
+        }
+    ],
+    "improvise": [
+        {
+            "name": "songBasicImprov",
+            "duration": 300,
+            "songName": "Autumn Leaves"
+        }
+    ]
+}
+]
